@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>BMI Calculator</title>
+	<meta charset="utf-8">
+	<meta name="viewpoint" content="width=device-width,initial-scale=1">
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+	<link rel="stylesheet" type="text/css" href="bootstrap/icofont/icofont.min.css">
+
+	<!-- JS -->
+	<script type="text/javascript" src="bootstrap/js/jquery.min.js"></script>
+	<script type="text/javascript" src="bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="custom.js"></script>
+	<script type="text/javascript" src="vue.min.js"></script>
+</head>
+<body>
+	
+	<div id="app">
+		
+	
+
+		<div class="card text-md-2">
+			<div class="card-header">
+				<h3>BMI CALCULATOR<h3>
+			</div>
+			<div class="card-body">
+				<form>
+					<div class="form-group row">
+						<label for="height" class="col-sm-2 col-form-label">Height<span class="text-danger">(feet)</span></label>
+						<div class="col-sm-2 form-row">
+							<input type="text" class="form-control col-sm-6 height" id="height" v-model="feet">
+							
+							
+						</div> 
+					</div>
+					<div class="form-group row">
+						<label for="hinchest" class="col-sm-2 col-form-label">Height<span class="text-danger">(inches)</span></label>
+						<div class="col-sm-2 form-row">
+							<input type="text" class="form-control col-sm-6 height" id="hinches" v-model="inches">
+							
+						</div> 
+					</div>
+					<div class="form-group row">
+						<label for="weight" class="col-sm-2 col-form-label">Weight</label>
+						<div class="col-sm-2 form-row">
+							<input type="text" class="form-control col-sm-6" id="weight" class="weight" v-model="weight">
+						</div>
+					</div>
+
+
+					<div class="form-group row">
+						<div class="col-sm-6 col-md-6 col-lg-4 col-12">
+							<button type="button" class="btn btn-primary col-sm-6 col-md-6 col-lg-4 col-12" @click="bmiCalculation">Compute BMI</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			
+			<div class="card-footer text-muted">
+				 <h2>This means you are: <span class="comment">{{result}}</span> </h2>
+			</div>
+		</div>
+
+	</div>
+	<div class="row container-fluid">
+				<div class="col-md-4">
+						<h3>BMI Categories</h3>
+						<div class="grid" style="display: flex;">
+						<div style="background-color: #1E90FF ;width: 200px; text-align: center; ">Underweight = <18.5</div>
+						<div style="background-color: #228822;width: 200px; text-align: center;">Normal Weight = between 18.5-24.9</div>
+						<div style="background-color: #FFD700;width: 200px; text-align: center;">Over Weight = between 25-29.9</div>
+						<div style="background-color: #FF0000;width: 200px; text-align: center;">Obesity = BMI of 30 or greater</div>
+					</div>
+				</div>
+			</div>
+	<!-- Script -->
+	<script type="text/javascript">
+		let app=new Vue({
+			el: '#app',
+			data: {
+				result: null,
+				feet: null,
+				inches: null,
+				weight: null,
+			},
+
+			methods: {
+				bmiCalculation(){
+					let feet = parseInt(this.feet);
+					let inches = parseInt(this.inches);
+					let height = (feet*12)+inches;
+
+					let weight = parseInt(this.weight);
+					let BMI = Math.pow(height,2);
+					let BMS=((weight/BMI)*703).toFixed(2);
+					this.result = BMS;
+					if (BMS<18.5) {
+						$('.comment').css('color','#1E90FF')
+						// document.getElementById("comment").innerText = "Underweight";
+					}else if (BMS<25) {
+						$('.comment').css('color','#228822')
+					}else if (BMS<30) {
+						$('.comment').css('color','#FFD700')
+					}else {
+						$('.comment').css('color','#FF0000')
+					}	
+				}
+			}
+		})
+	</script>
+
+</body>
+</html>
